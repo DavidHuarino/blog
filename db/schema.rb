@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161204011954) do
+ActiveRecord::Schema.define(version: 20161218221548) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -46,6 +46,16 @@ ActiveRecord::Schema.define(version: 20161204011954) do
   add_index "comments", ["article_id"], name: "index_comments_on_article_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
+  create_table "has_categories", force: true do |t|
+    t.integer  "article_id"
+    t.integer  "category_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "has_categories", ["article_id"], name: "index_has_categories_on_article_id"
+  add_index "has_categories", ["category_id"], name: "index_has_categories_on_category_id"
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -58,9 +68,9 @@ ActiveRecord::Schema.define(version: 20161204011954) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "name"
-    t.string   "permission_level"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "permission_level",       default: 1
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
